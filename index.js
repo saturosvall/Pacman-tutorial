@@ -3,7 +3,6 @@ const c = canvas.getContext('2d')
 
 const scoreEl = document.querySelector('#scoreEl')
 
-console.log(scoreEl)
 canvas.width = innerWidth
 canvas.height = innerHeight
 
@@ -18,12 +17,11 @@ class Boundary {
     }
 
     draw() {
-        //c.fillStyle = 'blue'
-        //c.fillRect(this.position.x, this.position.y, this.width, this.height)
         c.drawImage(this.image, this.position.x, this.position.y)
     }
 }
 
+// Pacman
 class Player {
     constructor({ position, velocity }) {
         this.position = position
@@ -33,7 +31,6 @@ class Player {
         this.openRate = 0.12
         this.rotation = 0
     }
-
 
     draw() {
         c.save()
@@ -60,13 +57,14 @@ class Player {
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
-
+        // Pacmans mouth opening
         if (this.radians < 0 || this.radians > .75) this.openRate 
             = -this.openRate
             this.radians += this.openRate
     }
 }
 
+// Ghost
 class Ghost {
     static speed = 2
     constructor({ position, velocity, color = 'red' }) {
@@ -95,12 +93,12 @@ class Ghost {
     }
 }
 
+// Pellets
 class Pellet {
     constructor({ position }) {
         this.position = position
         this.radius = 3
     }
-
 
     draw() {
         c.beginPath()
@@ -112,12 +110,12 @@ class Pellet {
 
 }
 
+// Powerup
 class PowerUp {
     constructor({ position }) {
         this.position = position
         this.radius = 8
     }
-
 
     draw() {
         c.beginPath()
@@ -548,7 +546,6 @@ function animate() {
                 ghost.scared = true
                 console.log(ghost.scared)
 
-
                 setTimeout(() => {
                     ghost.scared = false
                     console.log(ghost.scared)
@@ -584,15 +581,13 @@ function animate() {
                 rectangle:boundary
             })
         ) {
-            console.log('we are colliding')
             player.velocity.y = 0             
             player.velocity.x = 0 
             }
     })
 
     player.update()
-    //player.velocity.y = 0               // stop movement
-    //player.velocity.x = 0               // stop movement
+
     ghosts.forEach(ghost => {
         ghost.update()
         
@@ -655,7 +650,6 @@ function animate() {
             ghost.prevCollisions = collisions
         
         if (JSON.stringify(collisions) !== JSON.stringify(ghost.prevCollisions)) {
-            //console.log('gogo')
             console.log(collisions)
             console.log(ghost.prevCollisions)
             if (ghost.velocity.x > 0) ghost.prevCollisions.push('right')
@@ -694,7 +688,6 @@ function animate() {
 
                 ghost.prevCollisions = []
             }
-            //console.log(collisions)
         })
      
 
